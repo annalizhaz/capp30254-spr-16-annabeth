@@ -17,7 +17,7 @@ genderless = df[df["Gender"].isnull()]
 name_set = set(genderless["First_name"])
 
 url_app = []
-
+'''
 for i, name in enumerate(name_set):
     name_low = name.lower()
     name_i = str(i)
@@ -34,12 +34,12 @@ gender_dict = {}
 for row in result_j:
     gender_dict[row["name"].capitalize()] = row["gender"].capitalize()
 
-for i, has_gender in df["Gender"].isnull():
+for i, has_gender in list(df["Gender"].isnull()):
     if not has_gender:
         df["Gender"][i] = gender_dict[(df["First_name"][i])]
 
 df.to_csv("genders_added.csv")
-
+'''
 method_A = df.fillna(df.mean())
 
 method_A.to_csv("fill_means.csv")
