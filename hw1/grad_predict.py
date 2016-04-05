@@ -13,8 +13,11 @@ def get_description(df, file_name):
     '''
     df1 = df.describe().T.assign(median=df.median()).T
     df2 = df.describe(include = ["O"])
-    desc_stats = (df1.join(df2, how = "outer")).append(df.mode().dropna()).T
+    df3 = df.drop(["ID"], axis=1)
+
+    desc_stats = (df1.join(df2, how = "outer")).append(df3.mode().dropna()).T
     stats_final = desc_stats.assign(missing = len(df) - desc_stats["count"])
+    stats_final.rename(columns={0 : "mode"}, inplace = True)
 
     del stats_final["top"]
     del stats_final["count"]
