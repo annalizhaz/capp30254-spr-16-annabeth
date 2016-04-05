@@ -11,10 +11,19 @@ def get_description(df, file_name):
     Takes pandas data frame and returns descriptive
     statistics for numerical and string data
     '''
-    df1 = df.describe()
+    df1 = df.describe().T.assign(median=df.median()).T
     df2 = df.describe(include = ["O"])
-    desc_stats = (df1.join(df2, how = "outer")).T
+    desc_stats = (df1.join(df2, how = "outer")).append(df.mode().dropna()).T
     stats_final = desc_stats.assign(missing = len(df) - desc_stats["count"])
+
+    del stats_final["top"]
+    del stats_final["count"]
+    del stats_final["unique"]
+    del stats_final["freq"]
+    del stats_final["25%"]
+    del stats_final["50%"]
+    del stats_final["75%"]
+
     stats_final.to_csv(file_name)
 
 def make_plots(df, gpa_fig, age_fig, days_fig):
