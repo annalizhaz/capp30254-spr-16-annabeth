@@ -12,6 +12,16 @@ def get_description(df, file_name):
     stats_final.to_csv(file_name)
     return
 
+def make_plots(df, column_headers):
+    '''
+    Takes dataframe and plots histograms for age, gpa, and days of school missed
+    '''
+    for attribute in column_headers:
+        plot = df[attribute].plot.hist()
+        fig = plot.get_figure()
+        fig.savefig(attribute + ".png")
+        fig.clear()
+
 def fill_in(df):
     new_df = df.fillna(df.mean())
     return new_df
@@ -91,6 +101,7 @@ def hw2_go(file_name, desc_file_name, predict, drop_attr, has_index=True):
 
     df = pd.read_csv(file_name, index_col=index_col_number)
     get_description(df, desc_file_name)
+    make_plots(df, list(df.columns))
     df1 = fill_in(df)
     df2 = discretize_q(df1, ["age"], 4)
     df3 = cat_to_binary(df2, ["age_cat"])
