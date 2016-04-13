@@ -2,6 +2,18 @@ import pandas as pd
 import random
 from sklearn.linear_model import LogisticRegression
 
+ATTRIBUTE_DICT = {"SeriousDlqin2yrs" : "Has Had Serious Delinquincy in Past 2 Years",\
+ "NumberOfTimes90DaysLate": "Number of Times Person was 90+ Days Late", \
+ "RevolvingUtilizationOfUnsecuredLines" : "Credit Card Usage", \
+ "NumberOfTime30-59DaysPastDueNotWorse": "Number of Times 30-59 Days Past Due", \
+ "DebtRatio": "Debt Ration", \
+ "NumberOfDependents": "Number of Dependents", \
+ "MonthlyIncome": "Monthly Income", \
+ "NumberOfOpenCreditLinesAndLoans" : "Number of Open Credit Lines and Loans", \
+ "NumberRealEstateLoansOrLines": "Number of Real Estate Loans or Lines", \
+ "NumberOfTime60-89DaysPastDueNotWorse": "Number of Times 60-89 Days Past Due", \
+ "age": "Age"}
+
 def get_description(df, file_name):
     df1 = df.describe().T
     modes = df.mode().T
@@ -18,6 +30,7 @@ def make_plots(df, column_headers):
     '''
     for attribute in column_headers:
         plot = df[attribute].plot.hist()
+        plot.set_title(ATTRIBUTE_DICT[attribute])
         fig = plot.get_figure()
         fig.savefig(attribute + ".png")
         fig.clear()
@@ -121,4 +134,4 @@ def hw2_go(file_name, desc_file_name, predict, drop_attr, has_index=True):
 
     return accuracy
 
-#hw2_go("cs-training.csv", "test5.csv", "SeriousDlqin2yrs", ["SeriousDlqin2yrs", "NumberOfTimes90DaysLate", "RevolvingUtilizationOfUnsecuredLines", "NumberOfTime30-59DaysPastDueNotWorse", "NumberOfTime30-59DaysPastDueNotWorse", "NumberOfTime30-59DaysPastDueNotWorse", "NumberOfTime30-59DaysPastDueNotWorse", "DebtRatio", "NumberOfDependents", "MonthlyIncome"])
+hw2_go("cs-training.csv", "test5.csv", "SeriousDlqin2yrs", ["SeriousDlqin2yrs"])
