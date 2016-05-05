@@ -31,7 +31,7 @@ def get_description(df, file_name):
 
 def make_plots(df, gpa_fig, age_fig, days_fig):
     '''
-    Takes dataframe and plots hostograms for age, gpa, and days of school missed
+    Takes dataframe and plots histograms for age, gpa, and days of school missed
     '''
     GPA_plot = df["GPA"].plot.hist()
     fig = GPA_plot.get_figure()
